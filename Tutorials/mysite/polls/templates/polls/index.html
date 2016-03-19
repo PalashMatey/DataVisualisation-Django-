@@ -1,9 +1,80 @@
+
+
+
+<p>Select a City</p> 
+{% if city_list %}
+    <ul>
+        {% for city in city_list %}
+            <li><a href="/polls/{{city.id }}/">{{ city.city_text }}</a></li>
+	{% endfor %}
+   </ul>
+{% else %}
+    <p>No city is available.</p>
+{% endif %}
+
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
         <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
+	
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+{{latest_temperature_list.id}}
+
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Time', 'Temperature'],
+          ['2004',  1000,      ],
+          ['2005',  1170,      ],
+          ['2006',  660,       ],
+          ['2007',  1030,     ]
+        ]);
+
+        var options = {
+          title: 'Temperature Stream from Edison',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+  </body>
+</html>
+
+
+<form action="route/" method="post">
+  {% csrf_token %}
+  <p>Select your route</p>
+  <fieldset id="group1">
+  Start City:<br>
+    {% for city in city_list %}
+          <input type="radio" name="group1" value="city.city_text" checked> {{city.city_text}}<br> 
+
+    {% endfor %}
+  </fieldset>
+  <fieldset id="group2">
+    End City:<br>
+    {% for city in city_list %}
+          <input type="radio" name="group2" value="city.city_text" checked> {{city.city_text}}<br>
+    {% endfor %}
+  </fieldset>
+  <input type="submit" value="OK">
+</form>
+
+
