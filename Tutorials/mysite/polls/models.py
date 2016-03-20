@@ -7,10 +7,12 @@ from django.db import models
 class Question(models.Model):
 	city_text = models.CharField(max_length = 200)
 	temp = models.IntegerField(default=0)
+	lat = models.FloatField()
+	lon = models.FloatField()
 	def __str__(self):
 		return self.city_text
 
-
+	
 
 class Temperature(models.Model):
 	temperature = models.ForeignKey(Question,on_delete = models.CASCADE)

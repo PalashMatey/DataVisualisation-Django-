@@ -20,10 +20,9 @@ print Question.objects.all()
 
 #print Question.objects.all()
 for i in range(0,4):
-	q = Question.objects.get(city_text=cities[i])
-	#t = Question.objects.get(city_text=cities[i])
 	
-	print q
+	q = Question.objects.filter(city_text=cities[i])
+			
 	#print q.temperature_set.all()
 	observation = owm.weather_at_place(str(cities[i])+',US')
 	w = observation.get_weather()
@@ -32,10 +31,12 @@ for i in range(0,4):
 	y = geolocator.geocode(cities[i])
 	t = []
 	fin = y.raw
-	t.append(fin['lon'])
-	t.append(fin['lat'])
-	c = ''.join(t)
-	q.temperature_set.create(temperature_data= x['temp'])
+	lo = fin['lon']
+	la = fin['lat']
+	q.update(lat = la,lon = lo)
+	#print q.lon
+	#print q.lat
+	#q.temperature_set.create(temperature_data= x['temp'])
 	#t.temperature_set.create(location = c)
-	print q.temperature_set.all()
+	#print q.temperature_set.all()
 	#print t.temperature_set.all()

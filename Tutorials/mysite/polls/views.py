@@ -13,6 +13,7 @@ def index(request):
      template = loader.get_template('polls/index.html')
      context = {
 		#'latest_question_list' : latest_question_list,
+
 		'city_list' : city_list,
 	}
      #output = ', '.join([q.question_text for q in latest_question_list])
@@ -34,8 +35,27 @@ def detail(request, city_id):
 
     return render(request,'polls/detail.html',{'city': city})
 
-def route(request, valami):
-    return  HttpResponse("You're voting on question %s.")       
+def route(request):
+    city_start = Question.objects.get(city_text=(request.POST['group1']))
+    #city_list = []
+    #city_list.append(request.POST['group1'])
+    #city_list.append(request.POST['group2'])
+    #city_list2 = []
+    city_end = Question.objects.get(city_text=(request.POST['group2']))
+    city1 = request.POST['group1']
+    city2 = request.POST['group2']
+    observation1 = owm.weather_at_place(city1+',US')
+    w1 = observation1.get_weather()
+    x1 =  w1.get_temperature('celsius')
+    #city_list2.append(x1['temp'])
+    city_start.temp = x1['temp']
+    observation2 = owm.weather_at_place(city2+',US')
+    w2 = observation2.get_weather()
+    x2 =  w2.get_temperature('celsius')
+    #city_list2.append(x2['temp'])
+    city_end.temp = x2['temp']
+    #mylist = zip(city_list, city_list2)i
+    return  render(request,'polls/route.html', {'city_start' : city_start, 'city_end' : city_end})       
 
 
 def results(request, question_id):
