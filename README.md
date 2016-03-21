@@ -19,7 +19,7 @@ Basic Django WebApplication
 	
 To run either web application:
 
-python manage.py runserver <your-ip-address>:<port-address>
+python manage.py runserver your-ip-address:port-address
 
 
 
