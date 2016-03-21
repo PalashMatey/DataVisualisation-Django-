@@ -1,0 +1,15 @@
+<p> Your starting point is {{city_start.city_text}}, temperature is {{city_start.temp}} Celsius.</p>
+
+<p> Your endpoint point is {{city_end.city_text}}, temperature is {{city_end.temp}} Celsius.</p>
+
+<iframe
+  width="1200"
+  height="800"
+  frameborder="0" style="border:0"
+  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyA-WM7gEykQ0dn66GNgh6M8EFR8ejYr390&origin={{city_start.city_text}}+US
+  &destination={{city_end.city_text}}+US
+  &avoid=tolls|highways" allowfullscreen>
+</iframe>
+
+
+
