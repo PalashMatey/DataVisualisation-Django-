@@ -1,0 +1,38 @@
+
+
+
+<p>Select a City</p> 
+{% if city_list %}
+    <ul>
+        {% for city in city_list %}
+            <li><a href="/polls/{{city.id }}/">{{ city.city_text }}</a></li>
+	{% endfor %}
+   </ul>
+{% else %}
+    <p>No city is available.</p>
+{% endif %}
+
+
+
+
+
+<form action="route/" method="post">
+  {% csrf_token %}
+  <p>Select your route</p>
+  <fieldset id="group1">
+  Start City:<br>
+    {% for city in city_list %}
+          <input type="radio" name="group1" value="{{city.city_text}}" checked> {{city.city_text}}<br> 
+
+    {% endfor %}
+  </fieldset>
+  <fieldset id="group2">
+    End City:<br>
+    {% for city in city_list %}
+          <input type="radio" name="group2" value="{{city.city_text}}" checked> {{city.city_text}}<br>
+    {% endfor %}
+  </fieldset>
+  <input type="submit" value="OK">
+</form>
+
+
